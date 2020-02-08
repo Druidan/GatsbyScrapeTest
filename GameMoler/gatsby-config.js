@@ -1,14 +1,14 @@
 module.exports = {
   siteMetadata: {
     title: `Game Mole`,
-    description: `Digging up the latest Videogame and Entertainment news!`,
+    description: `An aggregator of the latest news from the most popular game news sites on the internet.`,
     author: `Edward L Cheever II`,
   },
   plugins: [
-    // {
-    //   resolve: `gatsby-source-mongodb`,
-    //   options: { connectionString: process.env.MONGODB_URI, dbName: `gamemole`, collection: `documents` },
-    // },
+    {
+      resolve: `gatsby-source-mongodb`,
+      options: { connectionString: process.env.MONGODB_URI, dbName: `gamemole`, collection: `documents` },
+    },
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
