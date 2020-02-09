@@ -1,5 +1,8 @@
-import Axios from "axios"
+import axios from "axios"
 import Cheerio from "cheerio"
+import axiosCloudflare from 'axios-cloudflare'
+
+axiosCloudflare(axios)
 
 const scrape = e => {
     e.preventDefault()
@@ -8,8 +11,8 @@ const scrape = e => {
         // Create empty data structures in which we can save the restructured data.
         let savedSummaries = []
 
-        // Get html from IGN using Axios.
-        const IGNScrape = Axios({
+        // Get html from IGN using axios.
+        const IGNScrape = axios({
             method: 'get',
             headers: { 'Content-Type': 'application/json' },
             url: 'https://www.ign.com/articles?tags=news'
@@ -52,11 +55,11 @@ const scrape = e => {
         })
         .catch(err => {
             console.log("We've got a problem with the IGN call, captain!")
-            console.log(err)
+            console.error(err)
         })
 
         // Get html from Game Informer
-        const GIScrape = Axios({
+        const GIScrape = axios({
             method: 'get',
             headers: { 'Content-Type': 'application/json' },
             url: 'https://www.gameinformer.com/news'
@@ -92,16 +95,15 @@ const scrape = e => {
                     allGIResponses = Object.assign(allGIResponses, giResult)
                 }
             })
-            console.log(allGIResponses)
             return allGIResponses
         })
         .catch(err => {
             console.log("We've got a problem with the Game Informer call, captain!")
-            console.log(err)
+            console.error(err)
         })
 
         // Get html from Destructoid
-        const DestScrape = Axios({
+        const DestScrape = axios({
             method: 'get',
             headers: { 'Content-Type': 'application/json' },
             url: 'https://www.destructoid.com'
@@ -145,10 +147,10 @@ const scrape = e => {
         })
         .catch(err => {
             console.log("We've got a problem with the destructoid call, captain!")
-            console.log(err)
+            console.error(err)
         })
 
-        // Use an async function to call and wait for all of our Axios get calls, and reduce the results to one object upon their completion.
+        // Use an async function to call and wait for all of our axios get calls, and reduce the results to one object upon their completion.
         const allScrapes = async () => {
             const FinalIGNResults = await IGNScrape
             const FinalGIResults = await GIScrape
@@ -162,12 +164,13 @@ const scrape = e => {
 
         // Call our async and reduce function, then use the response........
         allScrapes().then( result => {
+            console.log(result)
             // TODO: Use result object to create articles in the database, etc. from here.
             return result
         })
         .catch( err => {
             console.log("We've got a problem with the scrape function, captain!")
-            console.log(err)
+            console.error(err)
         })
 
 }
