@@ -8,8 +8,8 @@ const scrape = e => {
         // Create empty data structures in which we can save the restructured data.
         let savedSummaries = []
 
-        // Get html from IGN using axios.
-        const IGNScrape = fetch("http://localhost:8888/.netlify/functions/fetchPastCORS", {
+        // Get html from IGN using fetch.
+        const IGNScrape = fetch(`${process.env.MY_URL}/.netlify/functions/fetchPastCORS`, {
             headers: { 
                 'Accept': "text/html",
                 myURL: "https://www.ign.com/articles?tags=news"
@@ -164,7 +164,7 @@ const scrape = e => {
             return {}
         })
 
-        // Use an async function to call and wait for all of our axios get calls, and reduce the results to one object upon their completion.
+        // Use an async function to call and wait for all of our fetch calls, and reduce the results to one object upon their completion.
         const allScrapes = async () => {
             const FinalIGNResults = await IGNScrape
             const FinalGIResults = await GIScrape
