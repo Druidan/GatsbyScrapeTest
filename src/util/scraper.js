@@ -1,6 +1,8 @@
 import fetch from "node-fetch"
 import Cheerio from "cheerio"
 
+//TODO: Uninstall Axios and axios-cloudlfare dependancies. They are no longer needed.
+
 const scrape = e => {
     e.preventDefault()
 
