@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `Game Mole`,
-    description: `Digging up the latest Videogame and Entertainment news!`,
+    description: `An aggregator of the latest news from the most popular game news sites on the internet.`,
     author: `Edward L Cheever II`,
   },
   plugins: [

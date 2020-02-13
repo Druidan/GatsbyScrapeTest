@@ -1,8 +1,5 @@
-import axios from "axios"
+import fetch from "node-fetch"
 import Cheerio from "cheerio"
-import axiosCloudflare from 'axios-cloudflare'
-
-axiosCloudflare(axios)
 
 const scrape = e => {
     e.preventDefault()
@@ -12,14 +9,21 @@ const scrape = e => {
         let savedSummaries = []
 
         // Get html from IGN using axios.
-        const IGNScrape = axios({
-            method: 'get',
-            headers: { 'Content-Type': 'application/json' },
-            url: 'https://www.ign.com/articles?tags=news'
+        const IGNScrape = fetch("http://localhost:8888/.netlify/functions/fetchPastCORS", {
+            headers: { 
+                'Accept': "text/html",
+                myURL: "https://www.ign.com/articles?tags=news"
+            }
         })
-        .then(ignResponse => {
+        .then(ignResponse => 
+            ignResponse.text().then(data => ({
+                data: data,
+                status: ignResponse.status
+            }))
+        ).then(ignData => {
+            console.log(ignData)
         // Create a Cheerio function binding using the response data from IGN.
-        const ign$ = Cheerio.load(ignResponse.data)
+        const ign$ = Cheerio.load(ignData.data)
         let allIGNResponses = {}
 
         // Use the IGN Cheerio function to scrape each article in the html and use an each method to iterate over the article nodes.
@@ -53,20 +57,23 @@ const scrape = e => {
             })
             return allIGNResponses            
         })
-        .catch(err => {
-            console.log("We've got a problem with the IGN call, captain!")
-            console.error(err)
-        })
 
         // Get html from Game Informer
-        const GIScrape = axios({
-            method: 'get',
-            headers: { 'Content-Type': 'application/json' },
-            url: 'https://www.gameinformer.com/news'
+        const GIScrape = fetch("http://localhost:8888/.netlify/functions/fetchPastCORS", {
+            headers: {
+                'Accept': "text/html", //text/html
+                myURL: 'https://www.gameinformer.com/news'
+            }
         })
-        .then( giResponse => {
+        .then( giResponse => 
+            giResponse.text().then(data => ({
+                data: data,
+                status: giResponse.status
+            }))
+        ).then(giData => {
+            console.log(giData)
             // Create a Cheerio function binding using the response data from Game Informer.
-            const gi$ = Cheerio.load(giResponse.data)
+            const gi$ = Cheerio.load(giData.data)
             let allGIResponses = {}
 
             // Use the Game Informer Cheerio function to find each article in the html and use an each method to iterate over the article nodes.
@@ -103,14 +110,20 @@ const scrape = e => {
         })
 
         // Get html from Destructoid
-        const DestScrape = axios({
-            method: 'get',
-            headers: { 'Content-Type': 'application/json' },
-            url: 'https://www.destructoid.com'
-        })
-        .then( destResponse => {
+        const DestScrape = fetch("http://localhost:8888/.netlify/functions/fetchPastCORS", {
+            headers: { 
+                'Accept': "text/html",
+                myURL: 'https://www.destructoid.com'
+            }}
+        ).then( destResponse => 
+            destResponse.text().then(data => ({
+                data: data,
+                status: destResponse.status
+            }))
+        ).then(destData => {
+            console.log(destData)
             // Create a Cheerio function binding using the response data from Destructoid.
-            const dest$ = Cheerio.load(destResponse.data)
+            const dest$ = Cheerio.load(destData.data)
             let allDestResponses = {}
 
             // Use the Destructoid Cheerio function to find each article in the html and use an each method to iterate over the article nodes.
@@ -148,6 +161,7 @@ const scrape = e => {
         .catch(err => {
             console.log("We've got a problem with the destructoid call, captain!")
             console.error(err)
+            return {}
         })
 
         // Use an async function to call and wait for all of our axios get calls, and reduce the results to one object upon their completion.
@@ -156,7 +170,7 @@ const scrape = e => {
             const FinalGIResults = await GIScrape
             const FinalDestructoidResults = await DestScrape
 
-            return [FinalIGNResults, FinalGIResults, FinalDestructoidResults].reduce( (acc, current) => {
+            return [FinalIGNResults, FinalGIResults, FinalDestructoidResults, FinalDestructoidResults].reduce( (acc, current) => {
                 if(current !== undefined)  Object.assign(acc, current)
                 return acc
             }, {} )
@@ -176,6 +190,3 @@ const scrape = e => {
 }
 
 export default scrape
-
-
-
