@@ -10,25 +10,27 @@ const scrape = e => {
         // Create empty data structures in which we can save the restructured data.
         let savedSummaries = []
 
-        // Get html from IGN using fetch.
+        // Get html from IGN first by calling the Netlify fetchPastCORS function.
         const IGNScrape = fetch(`${process.env.MY_URL}/.netlify/functions/fetchPastCORS`, {
             headers: { 
-                'Accept': "text/html",
-                myURL: "https://www.ign.com/articles?tags=news"
+                'Accept': "text/html", // We want to accept text and html.
+                myURL: "https://www.ign.com/articles?tags=news" // We send the targeted url in a custom header that will be used in fetchPastCORS
             }
         })
+        // With the response, convert it back to text, and put it and the response status in an object that will be passed along to the next .then().
         .then(ignResponse => 
             ignResponse.text().then(data => ({
                 data: data,
                 status: ignResponse.status
             }))
-        ).then(ignData => {
+        )
+        // With the data processed from the response, now we can actually process the data in our final .then()
+        .then(ignData => {
             console.log(ignData)
-        // Create a Cheerio function binding using the response data from IGN.
-        const ign$ = Cheerio.load(ignData.data)
-        let allIGNResponses = {}
-
-        // Use the IGN Cheerio function to scrape each article in the html and use an each method to iterate over the article nodes.
+            // Create a Cheerio function binding using the response data from IGN.
+            const ign$ = Cheerio.load(ignData.data)
+            let allIGNResponses = {}
+            // Use the IGN Cheerio function to scrape each article in the html and use an each method to iterate over the article nodes.
             ign$('div.listElmnt').each((i, element) => {
                 // Create an iterator that we can use to uniquely number our scraped data.
                 i = i + 1
@@ -59,12 +61,18 @@ const scrape = e => {
             })
             return allIGNResponses            
         })
+        .catch(err => {
+            console.log("We've got a problem with the IGN call, captain!")
+            console.error(err)
+            //If there was an error with the called data, return an empty object so that the whole scrape doesn't fail.
+            return {}
+        })
 
-        // Get html from Game Informer
+        // Get html from Game Informer by fetching through the Netlify fetchPastCORS function
         const GIScrape = fetch("http://localhost:8888/.netlify/functions/fetchPastCORS", {
             headers: {
-                'Accept': "text/html", //text/html
-                myURL: 'https://www.gameinformer.com/news'
+                'Accept': "text/html",  // We want to accept text and html.
+                myURL: 'https://www.gameinformer.com/news' // We send the targeted url in a custom header that will be used in fetchPastCORS
             }
         })
         .then( giResponse => 
@@ -72,12 +80,12 @@ const scrape = e => {
                 data: data,
                 status: giResponse.status
             }))
-        ).then(giData => {
+        )
+        .then(giData => {
             console.log(giData)
             // Create a Cheerio function binding using the response data from Game Informer.
             const gi$ = Cheerio.load(giData.data)
             let allGIResponses = {}
-
             // Use the Game Informer Cheerio function to find each article in the html and use an each method to iterate over the article nodes.
             gi$('article.node--type-article').each((i, element) => {
                 // Create an iterator that we can use to uniquely number our scraped data.
@@ -109,25 +117,28 @@ const scrape = e => {
         .catch(err => {
             console.log("We've got a problem with the Game Informer call, captain!")
             console.error(err)
+            //If there was an error with the called data, return an empty object so that the whole scrape doesn't fail.
+            return {}
         })
 
-        // Get html from Destructoid
+        // Get html from Destructoid by fetching through the Netlify fetchPastCORS function
         const DestScrape = fetch("http://localhost:8888/.netlify/functions/fetchPastCORS", {
             headers: { 
-                'Accept': "text/html",
-                myURL: 'https://www.destructoid.com'
+                'Accept': "text/html", // We want to accept text and html.
+                myURL: 'https://www.destructoid.com' // We send the targeted url in a custom header that will be used in fetchPastCORS
             }}
-        ).then( destResponse => 
+        )
+        .then( destResponse => 
             destResponse.text().then(data => ({
                 data: data,
                 status: destResponse.status
             }))
-        ).then(destData => {
+        )
+        .then(destData => {
             console.log(destData)
             // Create a Cheerio function binding using the response data from Destructoid.
             const dest$ = Cheerio.load(destData.data)
             let allDestResponses = {}
-
             // Use the Destructoid Cheerio function to find each article in the html and use an each method to iterate over the article nodes.
             dest$('article.smlpost').each((i, element) => {
                 // Create an iterator that we can use to uniquely number our scraped data.
@@ -151,7 +162,7 @@ const scrape = e => {
                 destResult[`destArticle ${i}`].summary = dest$(element)
                     .find('p')
                     .text()
-                // If the article is not already amongst the articles that have been previously saved, store the article in the results.
+                // If the article is not already amongst the articles that have been previously saved, and if the article title isn't an empty string, store the article in the results.
                 if (!savedSummaries.includes(destResult[`destArticle ${i}`].summary)) {
                     if (destResult[`destArticle ${i}`].title !== '') {
                         allDestResponses = Object.assign(allDestResponses, destResult)
@@ -163,6 +174,7 @@ const scrape = e => {
         .catch(err => {
             console.log("We've got a problem with the destructoid call, captain!")
             console.error(err)
+            //If there was an error with the called data, return an empty object so that the whole scrape doesn't fail.
             return {}
         })
 
