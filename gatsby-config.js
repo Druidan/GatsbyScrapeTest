@@ -1,3 +1,7 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   siteMetadata: {
     title: `Game Mole`,
@@ -16,9 +20,9 @@ module.exports = {
     {
       resolve: `gatsby-source-mongodb`,
       options: { 
-        connectionString: `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_SERVER}.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`,
-        dbName: `gamemole`, 
-        collection: [`articles`, `comments`]
+        connectionString: `mongodb+srv://${process.env.GATSBY_MONGO_USER}:${process.env.GATSBY_MONGO_PASSWORD}@${process.env.GATSBY_MONGO_SERVER}.mongodb.net/${process.env.GATSBY_MONGO_DB}?retryWrites=true&w=majority`,
+        dbName: `${process.env.GATSBY_MONGO_DB}`, 
+        collection: [`articles`, `comments`],
       },
     },
     `gatsby-transformer-sharp`,
