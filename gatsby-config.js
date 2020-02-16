@@ -5,16 +5,20 @@ module.exports = {
     author: `Edward L Cheever II`,
   },
   plugins: [
-    // {
-    //   resolve: `gatsby-source-mongodb`,
-    //   options: { connectionString: process.env.MONGODB_URI, dbName: `gamemole`, collection: `documents` },
-    // },
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
         path: `${__dirname}/src/images`,
+      },
+    },
+    {
+      resolve: `gatsby-source-mongodb`,
+      options: { 
+        connectionString: `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_SERVER}.mongodb.net/test?retryWrites=true&w=majority`, 
+        dbName: `gamemole`, 
+        collection: [`articles`, `comments`]
       },
     },
     `gatsby-transformer-sharp`,
