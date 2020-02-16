@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "axios": "^0.19.2",
+    "@apollo/client": "^3.0.0-beta.35",
     "axios-cloudflare": "^1.0.2",
     "cheerio": "^1.0.0-rc.3",
     "gatsby": "^2.19.12",
@@ -16,6 +16,7 @@
     "gatsby-plugin-sharp": "^2.4.5",
     "gatsby-source-filesystem": "^2.1.48",
     "gatsby-source-mongodb": "^2.1.32",
+    "gatsby-theme-apollo": "^3.0.1",
     "gatsby-transformer-sharp": "^2.3.14",
     "mongoose": "^5.9.1",
     "net": "^1.0.2",

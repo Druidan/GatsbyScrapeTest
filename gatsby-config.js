@@ -9,6 +9,7 @@ module.exports = {
     author: `Edward L Cheever II`,
   },
   plugins: [
+    `gatsby-theme-apollo`,
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
