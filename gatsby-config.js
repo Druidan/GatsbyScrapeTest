@@ -16,7 +16,7 @@ module.exports = {
     {
       resolve: `gatsby-source-mongodb`,
       options: { 
-        connectionString: `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_SERVER}.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`, 
+        connectionString: `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_SERVER}.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`,
         dbName: `gamemole`, 
         collection: [`articles`, `comments`]
       },
