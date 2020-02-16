@@ -17,6 +17,7 @@
     "gatsby-source-filesystem": "^2.1.48",
     "gatsby-source-mongodb": "^2.1.32",
     "gatsby-transformer-sharp": "^2.3.14",
+    "mongoose": "^5.9.1",
     "net": "^1.0.2",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
