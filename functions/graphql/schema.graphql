@@ -1,4 +1,15 @@
 # Construct a schema, using GraphQL schema language
 type Query {
-  hello: String
+  getArticles: [Article]
+}
+
+type Article {
+  id: ID
+  title: String
+  summary: String
+  sourceREF: String
+  source: String
+  mongodb_id: String
+  logo: String
+  link: String
 }

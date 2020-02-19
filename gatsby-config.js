@@ -10,6 +10,12 @@ module.exports = {
   },
   plugins: [
     `gatsby-theme-apollo`,
+    {
+      resolve: 'gatsby-plugin-express',
+      options: {
+        output: 'config/gatsby-express.json',
+      }
+    },
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,

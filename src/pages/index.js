@@ -5,6 +5,7 @@ import Image from "../components/image"
 import SEO from "../components/seo"
 
 import scrape from "../util/scraper"
+import Articles from "../components/Articles/Articles.js"
 
 const IndexPage = () => (
   <Layout>
@@ -16,6 +17,7 @@ const IndexPage = () => (
     <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
       <Image />
     </div>
+    <Articles/>
   </Layout>
 )
 
