@@ -22,38 +22,49 @@ const Articles = props => {
             }
           }
         `)
-    
-const [databaseArticles, setDatabaseArticles] = useState(null)
+
+// const articlesObject = {}
+//     Object.keys(allMongodbGamemoleArticles.edges).map(article => {
+//         const currentArticle = allMongodbGamemoleArticles.edges[article].node
+//         articlesObject[article] = {
+//             id: currentArticle.id,
+//             title: currentArticle.title,
+//             link: currentArticle.link,
+//             source: currentArticle.source,
+//             sourceRef: currentArticle.sourceRef,
+//             logo: currentArticle.logo,
+//             summary: currentArticle.summary
+//         }
+//     })
+
+
+const articlesObject = Object.keys(allMongodbGamemoleArticles.edges).map(article => {
+    const currentArticle = allMongodbGamemoleArticles.edges[article].node
+    return {
+        id: currentArticle.id,
+        title: currentArticle.title,
+        link: currentArticle.link,
+        source: currentArticle.source,
+        sourceRef: currentArticle.sourceRef,
+        logo: currentArticle.logo,
+        summary: currentArticle.summary
+    }
+})
+
+const [databaseArticles, setDatabaseArticles] = useState(articlesObject)
 // const [databaseComments, setDatabaseComments] = useState({})
 
-let articlesObject = {}
-    Object.keys(allMongodbGamemoleArticles.edges).map(article => {
-        const currentArticle = allMongodbGamemoleArticles.edges[article].node
-        articlesObject[article] = {}
-        articlesObject[article].title = currentArticle.title
-        articlesObject[article].link = currentArticle.link
-        articlesObject[article].source = currentArticle.source
-        articlesObject[article].sourceRef = currentArticle.sourceRef
-        articlesObject[article].logo = currentArticle.logo
-        articlesObject[article].summary = currentArticle.summary
-    })
-    console.log(articlesObject)
-
-
-
-const articlesArr = allMongodbGamemoleArticles.edges
     const savedArticles = (
         <Fragment>
             <article>
-                {Object.keys(articlesArr).map(article => { //databaseArticles
-                    const currentArticle = articlesArr[article].node //databaseArticles
-                    return <div key={currentArticle.id} className={`articleDiv ${currentArticle.source} savedArt`} id={currentArticle._id}>
-                        <a href={currentArticle.sourceRef} target='_blank' rel='noopener noreferrer'>
+                {databaseArticles.map(article => { //databaseArticles
+                    return <div key={article.id} className={`articleDiv ${article.source} savedArt`} id={article._id}>
+                        <a href={article.sourceRef} target='_blank' rel='noopener noreferrer'>
                             {/* <img className='newsLogo' src={`./assets/images/${currentArticle.logo}`} alt={`The logo for ${currentArticle.source}`}></img> */}
                         </a>
-                        <h2 className='articleTitle'>{currentArticle.title}</h2>
-                        <p className='articleSum'>{currentArticle.summary}</p>
-                        <a className='goToArticleBtn' href={currentArticle.link} target='_blank' rel='noopener noreferrer'>
+                        <h2 className='articleTitle'>{article.title}</h2>
+                        <p className='articleSum'>{article.summary}</p>
+                        <a className='goToArticleBtn' href={article.link} target='_blank' rel='noopener noreferrer'>
                             <button>
                                 Read Article
                             </button>
