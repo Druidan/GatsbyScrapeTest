@@ -23,21 +23,6 @@ const Articles = props => {
           }
         `)
 
-// const articlesObject = {}
-//     Object.keys(allMongodbGamemoleArticles.edges).map(article => {
-//         const currentArticle = allMongodbGamemoleArticles.edges[article].node
-//         articlesObject[article] = {
-//             id: currentArticle.id,
-//             title: currentArticle.title,
-//             link: currentArticle.link,
-//             source: currentArticle.source,
-//             sourceRef: currentArticle.sourceRef,
-//             logo: currentArticle.logo,
-//             summary: currentArticle.summary
-//         }
-//     })
-
-
 const articlesObject = Object.keys(allMongodbGamemoleArticles.edges).map(article => {
     const currentArticle = allMongodbGamemoleArticles.edges[article].node
     return {
@@ -53,6 +38,29 @@ const articlesObject = Object.keys(allMongodbGamemoleArticles.edges).map(article
 
 const [databaseArticles, setDatabaseArticles] = useState(articlesObject)
 // const [databaseComments, setDatabaseComments] = useState({})
+function callScrape() {
+    props.scrape()
+}
+callScrape(databaseArticles)
+
+const [newScrapedArticles, setScrapedArticles] = useState(null)
+
+async function scrapeForArticles() {
+
+    const rawScrape = await new Promise((resolve, reject) => {
+        resolve(props.scrape())
+    })
+    console.log(rawScrape)
+    const allScrapedArticles = Object.keys(rawScrape).map(article => {
+        return article
+    })
+    return allScrapedArticles 
+} 
+
+scrapeForArticles().then(data => {
+    setScrapedArticles(data)
+    console.log(newScrapedArticles)
+})
 
     const savedArticles = (
         <Fragment>

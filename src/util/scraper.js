@@ -1,12 +1,8 @@
 import fetch from "node-fetch"
 import Cheerio from "cheerio"
 
-const scrape = e => {
-    e.preventDefault()
-
-        //TODO: Figure out how saved summaries from the database will be called and used in this function to weed out saved articles from the scrape.
-        // Create empty data structures in which we can save the restructured data.
-        let savedSummaries = []
+const scrape = (e) => {
+    if (e) e.preventDefault()
 
         // Get html from IGN first by calling the Netlify fetchPastCORS function.
         const IGNScrape = fetch(`${process.env.MY_URL}/.netlify/functions/fetchPastCORS`, {
@@ -24,7 +20,6 @@ const scrape = e => {
         )
         // With the data processed from the response, now we can actually process the data in our final .then()
         .then(ignData => {
-            console.log(ignData)
             // Create a Cheerio function binding using the response data from IGN.
             const ign$ = Cheerio.load(ignData.data)
             let allIGNResponses = {}
@@ -52,10 +47,7 @@ const scrape = e => {
                     .text()
                     .match(/(?<=-)[\s\S]*(?=Read)/g)
                 ignResult[`ignArticle ${i}`].summary = sum.join('').trim();
-                // If the article is not already amongst the articles that have been previously saved, store the article in the results.
-                if (!savedSummaries.includes(ignResult[`ignArticle ${i}`].summary)) {
-                    allIGNResponses = Object.assign(allIGNResponses, ignResult)
-                }
+                allIGNResponses = Object.assign(allIGNResponses, ignResult)
             })
             return allIGNResponses            
         })
@@ -80,7 +72,6 @@ const scrape = e => {
             }))
         )
         .then(giData => {
-            console.log(giData)
             // Create a Cheerio function binding using the response data from Game Informer.
             const gi$ = Cheerio.load(giData.data)
             let allGIResponses = {}
@@ -105,10 +96,7 @@ const scrape = e => {
                 giResult[`giArticle ${i}`].summary = gi$(element)
                     .find('div.field--name-field-promo-summary')
                     .text()
-                // If the article is not already amongst the articles that have been previously saved, store the article in the results.
-                if (!savedSummaries.includes(giResult[`giArticle ${i}`].summary)) {
-                    allGIResponses = Object.assign(allGIResponses, giResult)
-                }
+                allGIResponses = Object.assign(allGIResponses, giResult)
             })
             return allGIResponses
         })
@@ -133,7 +121,6 @@ const scrape = e => {
             }))
         )
         .then(destData => {
-            console.log(destData)
             // Create a Cheerio function binding using the response data from Destructoid.
             const dest$ = Cheerio.load(destData.data)
             let allDestResponses = {}
@@ -160,11 +147,9 @@ const scrape = e => {
                 destResult[`destArticle ${i}`].summary = dest$(element)
                     .find('p')
                     .text()
-                // If the article is not already amongst the articles that have been previously saved, and if the article title isn't an empty string, store the article in the results.
-                if (!savedSummaries.includes(destResult[`destArticle ${i}`].summary)) {
-                    if (destResult[`destArticle ${i}`].title !== '') {
-                        allDestResponses = Object.assign(allDestResponses, destResult)
-                    }
+                // If the article title isn't an empty string, store the article in the results.
+                if (destResult[`destArticle ${i}`].title !== '') {
+                    allDestResponses = Object.assign(allDestResponses, destResult)
                 }
             })
             return allDestResponses
