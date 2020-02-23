@@ -1,64 +1,53 @@
 import React, { Fragment, useState } from "react"
-import { useQuery } from "@apollo/react-hooks"
-import { gql } from "apollo-boost"
-// import { useStaticQuery, graphql } from "gatsby"
-
-// const Articles = useStaticQuery(
-//     graphql`
-//       query {
-//         allMongodbGamemoleArticles {
-//             edges {
-//             node {
-//                 id
-//                 title
-//                 summary
-//                 sourceREF
-//                 source
-//                 mongodb_id
-//                 logo
-//                 link
-//             }
-//             }
-//         }
-//       }
-//     `)
-
+import { useStaticQuery, graphql } from "gatsby"
 
 const Articles = props => {
+
+    const { allMongodbGamemoleArticles } = useStaticQuery(
+        graphql`
+          query {
+            allMongodbGamemoleArticles {
+                edges {
+                node {
+                    id
+                    title
+                    summary
+                    sourceREF
+                    source
+                    mongodb_id
+                    logo
+                    link
+                }
+                }
+            }
+          }
+        `)
     
-const getArticles = gql`
-{
-    allMongodbGamemoleArticles {
-        edges {
-        node {
-            id
-            title
-            summary
-            sourceREF
-            source
-            mongodb_id
-            logo
-            link
-        }
-        }
-    }
-}`
+const [databaseArticles, setDatabaseArticles] = useState(null)
+// const [databaseComments, setDatabaseComments] = useState({})
 
-const { loading, error, data } = useQuery(getArticles)
+let articlesObject = {}
+    Object.keys(allMongodbGamemoleArticles.edges).map(article => {
+        const currentArticle = allMongodbGamemoleArticles.edges[article].node
+        articlesObject[article] = {}
+        articlesObject[article].title = currentArticle.title
+        articlesObject[article].link = currentArticle.link
+        articlesObject[article].source = currentArticle.source
+        articlesObject[article].sourceRef = currentArticle.sourceRef
+        articlesObject[article].logo = currentArticle.logo
+        articlesObject[article].summary = currentArticle.summary
+    })
+    console.log(articlesObject)
 
-    if (loading) return "loading...";
-    if (error) return `error: ${error.message}`;
 
-    // const [databaseArticles, setDatabaseArticles] = useState({data})
-    // const [databaseComments, setDatabaseComments] = useState({})
 
+const articlesArr = allMongodbGamemoleArticles.edges
     const savedArticles = (
         <Fragment>
             <article>
-                {Object.keys(data).map(article => { //databaseArticles
-                    const currentArticle = data[article] //databaseArticles
-
-                    return <div key={currentArticle._id} className={`articleDiv ${currentArticle.source} savedArt`} id={currentArticle._id}>
+                {Object.keys(articlesArr).map(article => { //databaseArticles
+                    const currentArticle = articlesArr[article].node //databaseArticles
+                    return <div key={currentArticle.id} className={`articleDiv ${currentArticle.source} savedArt`} id={currentArticle._id}>
                         <a href={currentArticle.sourceRef} target='_blank' rel='noopener noreferrer'>
                             {/* <img className='newsLogo' src={`./assets/images/${currentArticle.logo}`} alt={`The logo for ${currentArticle.source}`}></img> */}
                         </a>

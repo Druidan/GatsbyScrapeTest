@@ -17,7 +17,7 @@ export const client = new ApolloClient({
       if (networkError) console.log(`[Network error]: ${networkError}`)
     }),
     new HttpLink({
-      uri: "/.netlify/functions/graphql",
+      uri: `/.netlify/functions/graphql`,
       // credentials: "same-origin",
     }),
   ]),
