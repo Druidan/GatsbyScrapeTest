@@ -4,6 +4,9 @@ import Cheerio from "cheerio"
 const scrape = (e) => {
     if (e) e.preventDefault()
 
+    return new Promise((resolve, reject) => {
+
+    
         // Get html from IGN first by calling the Netlify fetchPastCORS function.
         const IGNScrape = fetch(`${process.env.MY_URL}/.netlify/functions/fetchPastCORS`, {
             headers: { 
@@ -177,13 +180,15 @@ const scrape = (e) => {
         allScrapes().then( result => {
             console.log(result)
             // TODO: Use result object to create articles in the database, etc. from here.
-            return result
+            return resolve(result)
         })
         .catch( err => {
-            console.log("We've got a problem with the scrape function, captain!")
-            console.error(err)
+            return reject( 
+                console.log("We've got a problem with the scrape function, captain!"),
+                console.error(err)
+            )
         })
-
+    })
 }
 
 export default scrape
