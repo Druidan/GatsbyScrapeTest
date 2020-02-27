@@ -1,10 +1,12 @@
 import fetch from "node-fetch"
 import Cheerio from "cheerio"
 
+import { q, l } from './ELC'
+
 const scrape = (e) => {
     if (e) e.preventDefault()
 
-    return new Promise((resolve, reject) => {
+    return new Promise(async function(resolve, reject) {
 
     
         // Get html from IGN first by calling the Netlify fetchPastCORS function.
@@ -174,21 +176,24 @@ const scrape = (e) => {
                 if(current !== undefined)  Object.assign(acc, current)
                 return acc
             }, {} )
-        }
+            }
 
         // Call our async and reduce function, then use the response........
-        allScrapes().then( result => {
-            console.log(result)
-            // TODO: Use result object to create articles in the database, etc. from here.
-            return resolve(result)
-        })
-        .catch( err => {
-            return reject( 
-                console.log("We've got a problem with the scrape function, captain!"),
-                console.error(err)
-            )
-        })
+        
+        const getResults = async () => {
+            return new Promise((resolve, reject) => {
+                allScrapes().then( result => {
+                    // TODO: Use result object to create articles in the database, etc. from here.
+                    resolve(result)
+                })
+                .catch( err => {
+                    console.log("We've got a problem with the scrape function, captain!")
+                    reject(err)
+                })
+            })
+        }
+        const finalResults = await getResults()
+        resolve(finalResults)
     })
 }
-
 export default scrape
