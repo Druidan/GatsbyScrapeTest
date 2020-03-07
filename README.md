@@ -5,93 +5,35 @@
   </a>
 </p>
 <h1 align="center">
-  Gatsby's default starter
+  Game Mole ReWrite
 </h1>
 
-Kick off your project with this default boilerplate. This starter ships with the main Gatsby configuration files you might need to get up and running blazing fast with the blazing fast app generator for React.
+This project is an experimental rewrite of the project [GameMole](https://gamemole.herokuapp.com/), which I originally wrote over a week as part of my coding bootcamp curriculum. 
 
-_Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.org/docs/gatsby-starters/)._
+## Overview
 
-## 🚀 Quick start
+1.  **What is GameMole?**
 
-1.  **Create a Gatsby site.**
+    Game Mole is a website built to scrape and aggregate news articles from multiple gaming news sites into one place, with the ability to mark articles as saved, and leave comments on those saved articles.
 
-    Use the Gatsby CLI to create a new site, specifying the default starter.
+2.  **No, but what is it REALLY?**
 
-    ```shell
-    # create a new Gatsby site using the default starter
-    gatsby new my-default-starter https://github.com/gatsbyjs/gatsby-starter-default
-    ```
+    In reality the purpose of the project is to display a knowledge of the NPM package Cheerio, React, Gatsby, GraphQL, and MongoDB with CRUD capabilities. 
 
-1.  **Start developing.**
+3.  **Why the Rewrite?**
 
-    Navigate into your new site’s directory and start it up.
+  * Have you seen the original site? It's ugly as sin. I bit off more than I could hew in the original project by trying to learn React a week early in the program because I didn't like Handlebars. In crash coursing through React, I failed to make the site look alright, and there are multiple clearly unfinished parts of the website.
+  * In my rush, I also failed to fully learn React, as shown in how I didn't fully use state properly. I want to have a more polished product to show that I indeed now know React.
+  * It is slow as molasses This is largely due to the asynchronous calls, in which I didn’t have any sort of “Loading” or “Fetching Articles” note, which I would have been incapable of writing at the time anyway. I have many more tools in my toolbox now to speed things up.
+  * Speaking of tools, I plan on using this opportunity to learn new tech, such as Gatsby GraphQL, Netlify, and Apollo. 
 
-    ```shell
-    cd my-default-starter/
-    gatsby develop
-    ```
-
-1.  **Open the source code and start editing!**
-
-    Your site is now running at `http://localhost:8000`!
-
-    _Note: You'll also see a second link: _`http://localhost:8000/___graphql`_. This is a tool you can use to experiment with querying your data. Learn more about using this tool in the [Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-five/#introducing-graphiql)._
-
-    Open the `my-default-starter` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes and the browser will update in real time!
-
-## 🧐 What's inside?
-
-A quick look at the top-level files and directories you'll see in a Gatsby project.
-
-    .
-    ├── node_modules
-    ├── src
-    ├── .gitignore
-    ├── .prettierrc
-    ├── gatsby-browser.js
-    ├── gatsby-config.js
-    ├── gatsby-node.js
-    ├── gatsby-ssr.js
-    ├── LICENSE
-    ├── package-lock.json
-    ├── package.json
-    └── README.md
-
-1.  **`/node_modules`**: This directory contains all of the modules of code that your project depends on (npm packages) are automatically installed.
-
-2.  **`/src`**: This directory will contain all of the code related to what you will see on the front-end of your site (what you see in the browser) such as your site header or a page template. `src` is a convention for “source code”.
-
-3.  **`.gitignore`**: This file tells git which files it should not track / not maintain a version history for.
-
-4.  **`.prettierrc`**: This is a configuration file for [Prettier](https://prettier.io/). Prettier is a tool to help keep the formatting of your code consistent.
-
-5.  **`gatsby-browser.js`**: This file is where Gatsby expects to find any usage of the [Gatsby browser APIs](https://www.gatsbyjs.org/docs/browser-apis/) (if any). These allow customization/extension of default Gatsby settings affecting the browser.
-
-6.  **`gatsby-config.js`**: This is the main configuration file for a Gatsby site. This is where you can specify information about your site (metadata) like the site title and description, which Gatsby plugins you’d like to include, etc. (Check out the [config docs](https://www.gatsbyjs.org/docs/gatsby-config/) for more detail).
-
-7.  **`gatsby-node.js`**: This file is where Gatsby expects to find any usage of the [Gatsby Node APIs](https://www.gatsbyjs.org/docs/node-apis/) (if any). These allow customization/extension of default Gatsby settings affecting pieces of the site build process.
-
-8.  **`gatsby-ssr.js`**: This file is where Gatsby expects to find any usage of the [Gatsby server-side rendering APIs](https://www.gatsbyjs.org/docs/ssr-apis/) (if any). These allow customization of default Gatsby settings affecting server-side rendering.
-
-9.  **`LICENSE`**: Gatsby is licensed under the MIT license.
-
-10. **`package-lock.json`** (See `package.json` below, first). This is an automatically generated file based on the exact versions of your npm dependencies that were installed for your project. **(You won’t change this file directly).**
-
-11. **`package.json`**: A manifest file for Node.js projects, which includes things like metadata (the project’s name, author, etc). This manifest is how npm knows which packages to install for your project.
-
-12. **`README.md`**: A text file containing useful reference information about your project.
-
-## 🎓 Learning Gatsby
-
-Looking for more guidance? Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.org/). Here are some places to start:
-
-- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.org/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
-
-- **To dive straight into code samples, head [to our documentation](https://www.gatsbyjs.org/docs/).** In particular, check out the _Guides_, _API Reference_, and _Advanced Tutorials_ sections in the sidebar.
-
-## 💫 Deploy
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-default)
-
-<!-- AUTO-GENERATED-CONTENT:END -->
+4. **Tech Stack**
+      [Gatsby](https://www.gatsbyjs.org/) - Gatsby is my tool of choice for a fast static website and SEO.
+      [GraphQL](https://graphql.org/) - Through Gatsby I want to start learning GraphQL, and use it to bring in my database data more swiftly.
+      [Netlify](https://www.netlify.com/) - Netlify will allow me to use serverless functions to bypass CORS locally, and create a static site with dynamic capabilities. I might eventually host on Netlify, but I need to look into it more.
+      [Apollo](https://www.apollographql.com/) - I plan on incorporating Apollo to use its GraphQL tools.
+      [MongoDB](https://www.mongodb.com/) - MongoDB, hosted on [Mongo Atlas](https://www.mongodb.com/cloud/atlas/lp/general/try?utm_source=google&utm_campaign=gs_americas_united%20states_search_brand_atlas_desktop&utm_term=mongodb&utm_medium=cpc_paid_search&utm_ad=e&gclid=Cj0KCQiAqY3zBRDQARIsAJeCVxNwTt1CBhnzyRpA2F4wm2xImHeRMoysFMh3Ch8SCsSQrkZEoGFzJBgaApLAEALw_wcB), with the [Mongoose](https://mongoosejs.com/) ODM, is going to be my database of choice for this project, as I want to slowly incorporate different kinds of databases with GraphQL. This is also partially because the original project was built with MongoDB and I want to be able to reuse some of the code to speed things along.
+      [Cheerio](https://www.npmjs.com/package/cheerio) - This will be my HTML scraping package of choice for the moment, mostly because I already used it in the original project, and I don’t want to add another new tech to learn to the pile with JsDOM.
+ 
+5. **Why the Slow Updates?**
+  As I am out of my bootcamp, and I'm working basically full time, this project is very much a side project that I do in my spare time. While I'm hoping to get done sooner than later so I can use what I learn here in my other more interesting projects, I also want to take my time to really learn and absorb this stuff, so progress will be slow and steady, but don't worry, we'll win the race eventually. 
