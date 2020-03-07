@@ -5,24 +5,33 @@ import { q, say } from '../../util/ELC'
 
 const Articles = props => {
 
-    const { allMongodbGamemoleArticles } = useStaticQuery(
+    const { allMongodbGamemoleArticles, allMongodbGamemoleComments } = useStaticQuery(
         graphql`
-          query {
-            allMongodbGamemoleArticles {
-                edges {
-                node {
-                    id
-                    title
-                    summary
-                    sourceREF
-                    source
-                    mongodb_id
-                    logo
-                    link
+            query GetArticlesAndComments {
+                allMongodbGamemoleArticles {
+                    edges {
+                    node {
+                        id
+                        title
+                        summary
+                        sourceREF
+                        source
+                        mongodb_id
+                        logo
+                        link
+                    }
+                    }
                 }
+                allMongodbGamemoleComments {
+                    edges {
+                    node {
+                        author
+                        message
+                        id
+                    }
+                    }
                 }
             }
-          }
         `)
 
 const articlesObject = Object.keys(allMongodbGamemoleArticles.edges).map(article => {
@@ -34,16 +43,24 @@ const articlesObject = Object.keys(allMongodbGamemoleArticles.edges).map(article
         source: currentArticle.source,
         sourceRef: currentArticle.sourceRef,
         logo: currentArticle.logo,
-        summary: currentArticle.summary
+        summary: currentArticle.summary,
+        comments: currentArticle.comments
+    }
+})
+
+const commentsObject = Object.keys(allMongodbGamemoleComments.edges).map(comment => {
+    const currentComment = allMongodbGamemoleComments.edges[comment].node
+    return {
+        id: currentComment.id,
+        author: currentComment.author,
+        message: currentComment.message
     }
 })
 
 const [databaseArticles, setDatabaseArticles] = useState(articlesObject)
-// const [databaseComments, setDatabaseComments] = useState({})
-// function callScrape() {
-//     props.scrape()
-// }
-// callScrape(databaseArticles)
+const [databaseComments, setDatabaseComments] = useState(commentsObject)
+
+console.log(databaseComments)
 
 const [newScrapedArticles, setScrapedArticles] = useState(null)
 
@@ -61,14 +78,12 @@ const scrapeForArticles = () => {
                 if(dbArt.title === data[i].title) { isUnique = false } 
                 return dbArt
             })
-            console.log(isUnique)
 
             if (isUnique) {
                 return data[i]
             } 
             return {}
-        })
-        console.log(gatheredArticles)   
+        }) 
         setScrapedArticles(gatheredArticles)
     })
 } 
