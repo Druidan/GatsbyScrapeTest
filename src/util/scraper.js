@@ -64,7 +64,7 @@ const scrape = (e) => {
         })
 
         // Get html from Game Informer by fetching through the Netlify fetchPastCORS function
-        const GIScrape = fetch("http://localhost:8888/.netlify/functions/fetchPastCORS", {
+        const GIScrape = fetch(`${process.env.MY_URL}/.netlify/functions/fetchPastCORS`, {
             headers: {
                 'Accept': "text/html",  // We want to accept text and html.
                 myURL: 'https://www.gameinformer.com/news' // We send the targeted url in a custom header that will be used in fetchPastCORS
@@ -113,7 +113,7 @@ const scrape = (e) => {
         })
 
         // Get html from Destructoid by fetching through the Netlify fetchPastCORS function
-        const DestScrape = fetch("http://localhost:8888/.netlify/functions/fetchPastCORS", {
+        const DestScrape = fetch(`${process.env.MY_URL}/.netlify/functions/fetchPastCORS`, {
             headers: { 
                 'Accept': "text/html", // We want to accept text and html.
                 myURL: 'https://www.destructoid.com' // We send the targeted url in a custom header that will be used in fetchPastCORS
