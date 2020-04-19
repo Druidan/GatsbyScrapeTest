@@ -7,6 +7,8 @@ import SEO from "../components/seo"
 import scrape from "../util/scraper"
 import Articles from "../components/Articles/Articles.js"
 
+import ApolloTest from "../components/ApolloTest"
+
 const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
@@ -14,6 +16,7 @@ const IndexPage = () => (
     <p>Welcome to your new Gatsby site.</p>
     <button onClick={ e =>{scrape(e)}}>Scrape!</button>
     <p>Now go build something great.</p>
+    <ApolloTest />
     <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
       <Image />
     </div>

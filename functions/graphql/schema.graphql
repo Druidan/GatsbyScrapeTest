@@ -1,6 +1,7 @@
 # Construct a schema, using GraphQL schema language
 type Query {
   getArticles: [Article]
+  hello: String
 }
 
 type Article {
