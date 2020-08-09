@@ -1,10 +1,11 @@
 import React from "react"
-import { Query } from "react-apollo"
+import { Query, useLazyQuery } from "react-apollo"
 import { gql } from "apollo-boost"
 
 const ApolloTest = () => {
 
-    const sayHi = <Query
+    const sayHi = 
+    <Query
         query={gql`
         {
             hello
@@ -12,7 +13,9 @@ const ApolloTest = () => {
         `}
     >
         {({ data }) =>
-        <div>A greeting from the server: {data.hello}</div>}
+            data.hello ? <div>A greeting from the server: {data.hello}</div> : 
+           <div>The server doesn't like you.</div>
+        }
     </Query>
     
     return sayHi

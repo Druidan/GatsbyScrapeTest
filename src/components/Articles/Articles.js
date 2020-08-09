@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
-import { q, say } from '../../util/ELC'
+// import { q, say } from '../../util/ELC'
 
 const Articles = props => {
 
@@ -60,7 +60,7 @@ const commentsObject = Object.keys(allMongodbGamemoleComments.edges).map(comment
 const [databaseArticles, setDatabaseArticles] = useState(articlesObject)
 const [databaseComments, setDatabaseComments] = useState(commentsObject)
 
-console.log(databaseComments)
+// console.log(databaseComments)
 
 const [newScrapedArticles, setScrapedArticles] = useState(null)
 

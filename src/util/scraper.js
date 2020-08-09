@@ -1,7 +1,7 @@
 import fetch from "node-fetch"
 import Cheerio from "cheerio"
 
-import { q, l } from './ELC'
+// import { q, l } from './ELC'
 
 const scrape = (e) => {
     if (e) e.preventDefault()
